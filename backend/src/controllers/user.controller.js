@@ -6,8 +6,12 @@ export const getRecommendedUsers = async (req, res) => {
     const currentUserId = req.user._id;
     const currentUser = req.user;
 
-    const recommendedUsers = User.find({
+    const recommendedUsers = await User.find({
       // $and operator is used to combine multiple conditions in a query. and all conditions must be true for a document to be included in the result set.
+      //ex.
+      // 1. NOT me //condition 1
+      // 2. NOT already my friend //condition 2
+      // 3. Have completed onboarding //condition 3
       $and: [
         { _id: { $ne: currentUserId } }, //Excluding current user , means you can't recommend yourself
         { _id: { $nin: currentUser.friends } }, //Excluding current friends means you can't recommend your friends
@@ -25,7 +29,7 @@ export const getMyFriends = async (req, res) => {
     const user = await User.findById(req.user._id)
       .select("friends")
       .populate(
-        "firends",
+        "friends",
         "fullName profilePic nativeLanguage learningLanguage",
       );
     res.status(200).json(user.friends);
@@ -47,15 +51,15 @@ export const sendFirendRequest = async (req, res) => {
     }
 
     //Check if recipient user exists
-    const recipint = await User.findById(recipientId);
-    if (!recipint) {
+    const recipintUser = await User.findById(recipientId);
+    if (!recipintUser) {
       return res.status(404).json({ message: "Recipint User not found" });
     }
     //Check if already friends
-    if (recipint.friends.includes(myId)) {
+    if (recipintUser.friends.includes(myId)) {
       return res.status(400).json({ message: "User is Already Your Firend " });
     }
-    const existsingRequest = recipint.FriendRequests.findOne({
+    const existsingRequest = await FriendRequest.findOne({
       //$or operator is use for logical or operation in a query.
       //Atleast one of the conditions must be true
       $or: [
@@ -68,7 +72,8 @@ export const sendFirendRequest = async (req, res) => {
         .status(400)
         .json({ message: "Friend Request already exists between you two" });
     }
-    const friendRequest = await new FriendRequest.create({
+    //Avoid new keyword when use "create" method of mongoose
+    const friendRequest = await FriendRequest.create({
       sender: myId,
       recipient: recipientId,
     });
@@ -110,6 +115,45 @@ export const acceptFriendRequest = async (req, res) => {
     res.status(200).json({ message: "Friend Request accepted successfully" });
   } catch (error) {
     console.log("Error in acceptFriendRequest Controller", error);
+    res.status(500).json({ message: "Internal Error" });
+  }
+};
+
+export const getFriendRequests = async (req, res) => {
+  try {
+    //Find all incoming friend requests for the logged-in user (means curent user is recipient) and populate the sender's details
+    const incomingReq = await FriendRequest.find({
+      recipient: req.user._id,
+      status: "pending",
+    }).populate(
+      "sender",
+      "fullName profilePic nativeLanguage learningLanguage",
+    );
+
+    //Find all accepted friend requests for the logged-in user (means current user is recipient) and populate the sender's details
+    const acceptedReq = await FriendRequest.find({
+      recipient: req.user._id,
+      status: "accepted",
+    }).populate("sender", "fullName profilePic ");
+    res.status(200).json({ incomingReq, acceptedReq });
+  } catch (error) {
+    console.log("Error in getFriendRequests Controller", error);
+    res.status(500).json({ message: "Internal Error" });
+  }
+};
+
+export const getOutgoingFriendReq = async (req, res) => {
+  try {
+    const outgoingRequests = await FriendRequest.find({
+      sender: req.user._id,
+      status: "pending",
+    }).populate(
+      "recipient",
+      "fullName profilePic nativeLanguage learningLanguage",
+    );
+    res.status(200).json(outgoingRequests);
+  } catch (error) {
+    console.log("Error in getOutgoingFriendReq Controller", error);
     res.status(500).json({ message: "Internal Error" });
   }
 };
