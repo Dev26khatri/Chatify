@@ -9,8 +9,11 @@ import ChatPage from "./pages/ChatPage";
 import { Toaster } from "react-hot-toast";
 import PageLoader from "./components/PageLoader";
 import useAuthUser from "./hooks/useAuthUser";
+import Layout from "./components/Layout";
+import useThemeStore from "./store/useThemeStore";
 
 const App = () => {
+  let { theme } = useThemeStore();
   //`https://jsonplaceholder.typicode.com/todos`
   const { isLoading, authUser } = useAuthUser();
   if (isLoading) {
@@ -22,13 +25,15 @@ const App = () => {
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = authUser?.isOnboarded; //As it is DB name
   return (
-    <div>
+    <div data-theme={theme}>
       <Routes>
         <Route
           path="/"
           element={
             isAuthenticated && isOnboarded ? (
-              <HomePage />
+              <Layout>
+                <HomePage />
+              </Layout>
             ) : (
               <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
             )

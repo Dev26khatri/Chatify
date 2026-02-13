@@ -14,10 +14,7 @@ const LoginPage = () => {
     loginMutation(loginData);
   };
   return (
-    <div
-      className="h-screen flex justify-center items-center p-4 sm:p-6 md:p-8"
-      data-theme="forest"
-    >
+    <div className="h-screen flex justify-center items-center p-4 sm:p-6 md:p-8">
       <div className="border border-primary/25  flex flex-col lg:flex-row w-full max-w-3xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
         {/* Login Form Section */}
         <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">

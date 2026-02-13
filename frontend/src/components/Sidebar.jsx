@@ -9,7 +9,7 @@ const Sidebar = () => {
   const currentPath = location.pathname;
 
   return (
-    <aside className="h-screen w-64 bg-base-200 border-r-2 border-base-100  lg:flex flex-col sticky top-0 ">
+    <aside className="h-screen w-64 bg-base-200 border-r border-base-200  lg:flex flex-col sticky top-0 ">
       <div className="p-5 border-base-300 ">
         <Link to="/" className="flex justify-center items-center gap-1  ">
           <ShipWheelIcon className="text-primary size-9" />
