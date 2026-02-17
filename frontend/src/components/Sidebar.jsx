@@ -2,16 +2,26 @@ import React from "react";
 import useAuthUser from "../hooks/useAuthUser";
 import { Link, useLocation } from "react-router";
 import { BellIcon, HomeIcon, ShipWheelIcon, UsersIcon } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { getFriendRequests } from "../lib/api";
 
 const Sidebar = () => {
   const { authUser } = useAuthUser();
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const { data: getFriendData } = useQuery({
+    queryKey: ["friendRequests"],
+    queryFn: getFriendRequests, // No need to fetch data for sidebar, we just want to invalidate this query on accepting friend request
+  });
+  const incomingRequestsCount = getFriendData?.incomingReq?.length || null;
+  console.log(getFriendData);
+  console.log(incomingRequestsCount);
+
   return (
-    <aside className="h-screen w-64 bg-base-200 border-r border-base-200  lg:flex flex-col sticky top-0 ">
-      <div className="p-5 border-base-300 ">
-        <Link to="/" className="flex justify-center items-center gap-1  ">
+    <aside className="h-screen w-64 bg-base-200 border-r border-base-200   lg:flex md:flex  flex-col sticky top-0 ">
+      <div className="p-5 border-base-300  ">
+        <Link to="/" className="flex justify-start items-center gap-1  ">
           <ShipWheelIcon className="text-primary size-9" />
           <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider">
             Chatify
@@ -38,7 +48,12 @@ const Sidebar = () => {
           className={`btn btn-ghost p-2 w-full justify-start gap-3 px-3 normal-case ${currentPath === "/notification" ? "btn-active" : ""}`}
         >
           <BellIcon className="size-5" />
-          <span>Notification</span>
+          <div className="flex items-center justify-around gap-2">
+            Notification
+            <span className="ml-3 font-bold font-mono text-primary">
+              {incomingRequestsCount}
+            </span>
+          </div>
         </Link>
       </nav>
 

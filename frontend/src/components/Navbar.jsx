@@ -12,7 +12,7 @@ const Navbar = () => {
   const { logOutMutaion } = useLogoutUser();
 
   return (
-    <nav className="bg-base-200 border-b border-base-300 sticky h-16 top-0 z-30 flex items-center">
+    <nav className="bg-base-200  border-base-300 sticky h-16 top-0 z-30 flex items-center">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-end w-full">
           {/* Logo only In the Chat Page  */}
@@ -38,7 +38,7 @@ const Navbar = () => {
           </div>
           <div className="flex items-center gap-3 sm:gap-4">
             <Link to={"/notification"}>
-              <button className="btn btn-ghost btn-circle">
+              <button className="btn btn-ghost btn-circle size-7 mx-1">
                 <img src={authUser?.profilePic} alt="" />
               </button>
             </Link>
