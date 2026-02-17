@@ -1,0 +1,12 @@
+# Ignore all node_modules anywhere
+node_modules/
+
+# Env files anywhere
+.env
+.env.*
+
+# Frontend build
+frontend/dist/
+
+# Backend build
+backend/dist/
