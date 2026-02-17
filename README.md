@@ -6,6 +6,18 @@
 [![Stream](https://img.shields.io/badge/Stream_Chat-005FFF?style=for-the-badge&logo=getstream&logoColor=white)](https://getstream.io/)
 [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
+Home page:
+![Home Page](https://github.com/Dev26khatri/Chatify/blob/main/Screenshot%202026-02-17%20222521.png)
+Notification Page : 
+![Notification page](https://github.com/Dev26khatri/Chatify/blob/main/Screenshot%202026-02-17%20222601.png)
+Theme Selector :
+![Theme Selector](https://github.com/Dev26khatri/Chatify/blob/main/Screenshot%202026-02-17%20222451.png)
+Chat Conversation :
+![Chat Page](https://github.com/Dev26khatri/Chatify/blob/main/Screenshot%202026-02-17%20223408.png)
+![Chat Page](https://github.com/Dev26khatri/Chatify/blob/main/Screenshot%202026-02-17%20223425.png)
+
+
+
 **Chatify** is a modern, full-stack communication platform that delivers enterprise-grade messaging infrastructure. By leveraging **Stream Chat APIs** instead of manual WebSocket management, it achieves massive scalability, persistent message history, and rich features out of the box.
 
 🌐 **[Live Demo](https://chatify-meetings.onrender.com/)** | 📂 **[Frontend Repo](#)** | 📂 **[Backend Repo](#)**
