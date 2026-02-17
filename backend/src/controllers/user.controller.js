@@ -17,7 +17,7 @@ export const getRecommendedUsers = async (req, res) => {
         { _id: { $nin: currentUser.friends } }, //Excluding current friends means you can't recommend your friends
         { isOnboarded: true }, //Only recommend users who have completed onboarding
       ],
-    });
+    }).select("-password");
     res.status(200).json(recommendedUsers);
   } catch (error) {
     console.log("Error in getRecommendedUsers Controller", error);
@@ -72,7 +72,7 @@ export const sendFirendRequest = async (req, res) => {
         .status(400)
         .json({ message: "Friend Request already exists between you two" });
     }
-    //Avoid new keyword when use "create" method of mongoose
+    //Avoid "new" keyword when use "create" method of mongoose
     const friendRequest = await FriendRequest.create({
       sender: myId,
       recipient: recipientId,
@@ -88,7 +88,6 @@ export const acceptFriendRequest = async (req, res) => {
     const { id: requestId } = req.params;
     //Find the friend request by its ID
     const friendRequest = await FriendRequest.findById(requestId);
-
     if (!friendRequest) {
       return res.status(404).json({ message: "Friend Request not found" });
     }

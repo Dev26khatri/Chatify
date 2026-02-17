@@ -14,7 +14,7 @@ export const SignupController = async (req, res) => {
     if (password.length < 6) {
       return res
         .status(400)
-        .json({ message: "Password Must Be At Least 6 Characters" });
+        .json({ message: "Password Should Be At Least 6 Characters" });
     }
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
@@ -131,7 +131,7 @@ export const onboard = async (req, res) => {
           !learningLanguage && "learningLanguage",
           !location && "location",
         ].filter(Boolean), //It removes falsey values only gives true values
-        data: req.body,
+        // data: req.body,
       });
     }
     const updatedUser = await User.findByIdAndUpdate(
@@ -141,6 +141,16 @@ export const onboard = async (req, res) => {
         new: true,
       },
     );
+    try {
+      await upsertStreamUser({
+        id: updatedUser._id,
+        name: updatedUser.fullName,
+        image: updatedUser.profilePic || "",
+      });
+      console.log(`Stream user Updated for ${updatedUser.fullName}`);
+    } catch (error) {
+      console.log("Error Updating Stream User during Onboarding:", error);
+    }
     if (!updatedUser) {
       return res.status(404).json({ message: "User Not Found" });
     }
