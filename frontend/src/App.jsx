@@ -11,6 +11,8 @@ import PageLoader from "./components/PageLoader";
 import useAuthUser from "./hooks/useAuthUser";
 import Layout from "./components/Layout";
 import useThemeStore from "./store/useThemeStore";
+import NotFoundFriend from "./components/NotFoundFriend";
+import NotFound404 from "./components/NotFound404";
 
 const App = () => {
   let { theme } = useThemeStore();
@@ -31,7 +33,7 @@ const App = () => {
           path="/"
           element={
             isAuthenticated && isOnboarded ? (
-              <Layout>
+              <Layout showSidebar={true}>
                 <HomePage />
               </Layout>
             ) : (
@@ -76,17 +78,38 @@ const App = () => {
         <Route
           path="/notification"
           element={
-            isAuthenticated ? <NotificationPage /> : <Navigate to="/login" />
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={true}>
+                <NotificationPage />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
           }
         />
         <Route
-          path="/call"
-          element={isAuthenticated ? <CallPage /> : <Navigate to="/login" />}
+          path="/call/:id"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <CallPage />
+            ) : (
+              <Navigate to={!isAuthenticated ? `/login` : `/onboarding`} />
+            )
+          }
         />
         <Route
-          path="/chat"
-          element={authUser ? <ChatPage /> : <Navigate to="/login" />}
+          path="/chat/:id"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={false}>
+                <ChatPage />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? `/login` : `/onboarding`} />
+            )
+          }
         />
+        <Route path="/*" element={<NotFound404 />} />
         {/* <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />

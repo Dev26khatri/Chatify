@@ -36,13 +36,13 @@ const Sidebar = () => {
           <HomeIcon className="size-5" />
           <span>Home</span>
         </Link>
-        <Link
+        {/* <Link
           to="/friends"
           className={`btn btn-ghost p-2 w-full justify-start gap-3 px-3 normal-case ${currentPath === "/friends" ? "btn-active" : ""}`}
         >
           <UsersIcon className="size-5" />
           <span>Friends</span>
-        </Link>
+        </Link> */}
         <Link
           to="/notification"
           className={`btn btn-ghost p-2 w-full justify-start gap-3 px-3 normal-case ${currentPath === "/notification" ? "btn-active" : ""}`}

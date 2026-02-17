@@ -15,11 +15,11 @@ const LoginPage = () => {
   };
   return (
     <div className="h-screen flex justify-center items-center p-4 sm:p-6 md:p-8">
-      <div className="border border-primary/25  flex flex-col lg:flex-row w-full max-w-3xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
+      <div className="border border-primary/25  flex flex-col lg:flex-row w-full max-w-3xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
         {/* Login Form Section */}
         <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
           {/* Logo */}
-          <div className="mb-4  flex items-center justify-start">
+          <div className="mb-4  flex items-center justify-start text-primary">
             <ShipWheel className="mr-4 size-9" />
             <span className="text-3xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
               Chatify

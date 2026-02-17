@@ -9,7 +9,7 @@ const SignupPage = () => {
     password: "",
   });
 
-  const { isPending, error, signupMutation } = useSignup();
+  const { isPending, error, isError, signupMutation } = useSignup();
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8 ">
-      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden">
+      <div className="border border-primary/25 flex flex-col lg:flex-row w-full max-w-5xl mx-auto bg-base-100 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-500">
         {/* LEFT SIDE - FORM */}
         <div className="w-full lg:w-1/2 p-4 sm:p-8 flex flex-col">
           {/* LOGO */}

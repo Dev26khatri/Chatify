@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { create } from "zustand";
 
 const useThemeStore = create((set) => ({
@@ -5,6 +6,7 @@ const useThemeStore = create((set) => ({
   setTheme: (theme) => {
     localStorage.setItem("Chatify-theme", theme);
     set({ theme });
+    toast.success(`Theme Changed to ${theme}`, { duration: 1000 });
   },
 }));
 
