@@ -119,7 +119,7 @@ const NotificationPage = () => {
                     New Connection
                   </h2>
                   {acceptedRequests.map((req) => (
-                    <div className="card bg-base-200 shadow-md hover:shadow-lg mt-5 transition-all">
+                    <div className="card bg-base-200 lg:text-lg shadow-md hover:shadow-lg mt-5 transition-all">
                       <div className="card-body  p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex items-center text-sm">
@@ -144,9 +144,9 @@ const NotificationPage = () => {
                               </p>
                             </div>
                           </div>
-                          <span className="badge badge-success flex items-center sm:text-sm md:text-xs lg:text-sm  ">
+                          <span className="badge badge-success w-auto lg:w-auto flex items-center text-xs md:text-xs lg:text-sm  ">
                             <MessageSquare className="size-3 mr-2" />
-                            New Friend
+                            <p className="text-xs lg:text-xm">New Friend</p>
                           </span>
                         </div>
                       </div>

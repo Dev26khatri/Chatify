@@ -118,7 +118,7 @@ const App = () => {
         <Route path="/call" element={<CallPage />} />
         <Route path="/chat" element={<ChatPage />} /> */}
       </Routes>
-      <Toaster position="right-bottom" />
+      <Toaster position="left-bottom" />
     </div>
   );
 };

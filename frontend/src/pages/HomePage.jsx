@@ -55,11 +55,14 @@ const HomePage = () => {
   return (
     <div className="p-4 sm:p-4 lg:p-6">
       <div className="container mx-auto space-y-10">
-        <div className="flex justify-between ">
+        <div className="flex justify-between items-center ">
           <h2 className="sm:text-xl md:text-2xl lg:text-3xl font-bold tracking-tighter">
-            Your Friends  
+            Your Friends
           </h2>
-          <Link className="flex items-center gap-3 btn btn-outline transition-all duration-700 text-xs ">
+          <Link
+            to="/notification"
+            className="flex items-center gap-3 btn btn-outline transition-all duration-700 text-xs "
+          >
             <UsersIcon className="size-4" />
             <p className="font-semibold tracking-wide">Friend Requests</p>
           </Link>
@@ -71,7 +74,7 @@ const HomePage = () => {
         ) : friends.length === 0 ? (
           <NotFoundFriend />
         ) : (
-          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
+          <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
             {friends.map((friend) => (
               <FriendCard key={friend._id} Frienduser={friend} />
             ))}
@@ -110,7 +113,7 @@ const HomePage = () => {
                 const hasRequestBeenSent = outgoingRequestIds.has(user._id);
                 // console.log(hasRequestBeenSent);
 
-                return (  
+                return (
                   <FriendCard
                     key={user._id}
                     RecommendedUsers={user}
