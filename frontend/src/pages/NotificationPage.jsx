@@ -31,6 +31,7 @@ const NotificationPage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
       queryClient.invalidateQueries({ queryKey: ["friends"] });
+      queryClient.invalidateQueries({ queryKey: ["recommendedUser"] });
       toast.success("Rejected");
     },
   });

@@ -10,6 +10,8 @@ const FriendCard = ({
   SendRequestMutation,
   IsPending,
 }) => {
+  console.log("isPending In Friend Card", IsPending);
+  console.log(RecommendedUsers);
   return (
     <div className="card bg-base-200 hover:shadow-md transition-all cursor-pointer">
       {Frienduser && (
@@ -106,7 +108,7 @@ const FriendCard = ({
             onClick={() => SendRequestMutation(RecommendedUsers._id)}
             disabled={HasRequestBeenSent || IsPending}
           >
-            {HasRequestBeenSent === true ? (
+            {HasRequestBeenSent ? (
               <>
                 <CheckCircleIcon className="size-5 mr-1" />
                 Request Sent

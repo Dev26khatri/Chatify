@@ -32,15 +32,19 @@ const HomePage = () => {
     },
   );
 
-  const { mutate: sendRequestMutation, isPending: isSendMutation } =
-    useMutation({
-      mutationFn: sendFriendReq,
-      onMutate: (userId) => {
-        setPendingState(userId);
-      },
-      onSuccess: () =>
-        queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] }),
-    });
+  const {
+    mutate: sendRequestMutation,
+    isPending: isSendMutation,
+    variables,
+  } = useMutation({
+    mutationFn: sendFriendReq,
+    onMutate: (userId) => {
+      setPendingState(userId);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["outgoingFriendReqs"] }),
+  });
+  // console.log("Pending State", pendingState);
   // console.log(sendFriendReq.onSuccess);
   useEffect(() => {
     const outgoingId = new Set();
@@ -112,6 +116,8 @@ const HomePage = () => {
               {recommendedUsers.map((user) => {
                 const hasRequestBeenSent = outgoingRequestIds.has(user._id);
                 // console.log(hasRequestBeenSent);
+                // console.log("IsPending = ", pendingState);
+                // console.log("User Id", user._id);
 
                 return (
                   <FriendCard
@@ -119,7 +125,7 @@ const HomePage = () => {
                     RecommendedUsers={user}
                     HasRequestBeenSent={hasRequestBeenSent}
                     SendRequestMutation={sendRequestMutation}
-                    IsPending={pendingState}
+                    IsPending={isSendMutation && variables == user._id}
                   />
                 );
               })}
