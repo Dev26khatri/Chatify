@@ -60,3 +60,10 @@ export const getStreamToken = async () => {
   const response = await axiosInstance.get("/chat/token");
   return response.data;
 };
+
+export const rejectRequest = async (rejectID) => {
+  const response = await axiosInstance.delete(
+    `/users/friend-request/${rejectID}/reject`,
+  );
+  return response.data;
+};

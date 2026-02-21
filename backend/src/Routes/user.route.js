@@ -7,6 +7,7 @@ import {
   getFriendRequests,
   getOutgoingFriendReq,
   acceptFriendRequest,
+  requestReject,
 } from "../controllers/user.controller.js";
 const router = express.Router();
 
@@ -24,6 +25,8 @@ router.put("/friend-request/:id/accept", acceptFriendRequest);
 router.get("/friend-requests", getFriendRequests);
 
 router.get("/outgoing-friend-requests", getOutgoingFriendReq);
+
+router.delete("/friend-request/:id/reject", requestReject);
 
 //TODO: Add route for rejecting friend request and removing friend
 export default router;

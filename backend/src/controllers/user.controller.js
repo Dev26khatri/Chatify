@@ -156,3 +156,17 @@ export const getOutgoingFriendReq = async (req, res) => {
     res.status(500).json({ message: "Internal Error" });
   }
 };
+
+export const requestReject = async (req, res) => {
+  try {
+    const request = await FriendRequest.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ message: "Request Not founded" });
+    }
+    await FriendRequest.findByIdAndDelete(request._id);
+    res.status(201).json({ message: "Friend Request Rejected", data: request });
+  } catch (err) {
+    console.log("Error Throwing at Request Reject controller");
+    res.status(500).json({ message: "Internal Error" });
+  }
+};

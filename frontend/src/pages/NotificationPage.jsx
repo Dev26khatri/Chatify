@@ -1,8 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { use } from "react";
-import { acceptFriendRequest, getFriendRequests } from "../lib/api";
+import {
+  acceptFriendRequest,
+  getFriendRequests,
+  rejectRequest,
+} from "../lib/api";
 import toast from "react-hot-toast";
-import { BellIcon, ClockIcon, MessageSquare, UserCheck } from "lucide-react";
+import { BellIcon, ClockIcon, MessageSquare, UserCheck, X } from "lucide-react";
 import { LANGUAGE_TO_FLAG } from "../constant";
 import NoNotification from "../components/NoNotification";
 
@@ -19,6 +23,15 @@ const NotificationPage = () => {
       queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
       queryClient.invalidateQueries({ queryKey: ["friends"] });
       toast.success("Friend Request Accepted");
+    },
+  });
+
+  const { mutate: rejectMutation, isPending: isPendingReject } = useMutation({
+    mutationFn: rejectRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
+      queryClient.invalidateQueries({ queryKey: ["friends"] });
+      toast.success("Rejected");
     },
   });
   // console.log("Friend Requests", friendRequests);
@@ -94,13 +107,21 @@ const NotificationPage = () => {
                                   </div>
                                 </div>
                               </div>
-                              <button
-                                className="btn btn-primary font-semibold btn-sm"
-                                onClick={() => acceptRequestMutation(req._id)}
-                                disabled={isPending}
-                              >
-                                Accept
-                              </button>
+                              <div className=" flex  justify-start items-center gap-3">
+                                <button
+                                  className="btn btn-primary font-semibold btn-sm"
+                                  onClick={() => acceptRequestMutation(req._id)}
+                                  disabled={isPending}
+                                >
+                                  Accept
+                                </button>
+                                <button
+                                  onClick={() => rejectMutation(req._id)}
+                                  disabled={isPendingReject}
+                                >
+                                  <X />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -119,7 +140,10 @@ const NotificationPage = () => {
                     New Connection
                   </h2>
                   {acceptedRequests.map((req) => (
-                    <div className="card bg-base-200 lg:text-lg shadow-md hover:shadow-lg mt-5 transition-all">
+                    <div
+                      key={req._id}
+                      className="card bg-base-200 lg:text-lg shadow-md hover:shadow-lg mt-5 transition-all"
+                    >
                       <div className="card-body  p-4">
                         <div className="flex items-start justify-between">
                           <div className="flex items-center text-sm">

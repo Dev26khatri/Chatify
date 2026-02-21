@@ -119,7 +119,7 @@ const HomePage = () => {
                     RecommendedUsers={user}
                     HasRequestBeenSent={hasRequestBeenSent}
                     SendRequestMutation={sendRequestMutation}
-                    IsPending={pendingState === user._id}
+                    IsPending={pendingState}
                   />
                 );
               })}
